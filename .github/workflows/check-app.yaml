@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  publish:
+  check-app:
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -19,6 +19,9 @@ jobs:
           node-version: 20
           registry-url: https://npm.pkg.github.com
           scope: 'executors-org'
+
+      - name: Authenticate with private NPM package
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
       
       - name: Install dependencies
         run: yarn install --frozen-lockfile
